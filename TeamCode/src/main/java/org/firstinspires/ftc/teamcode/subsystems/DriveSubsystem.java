@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.OpmodeConstants;
 
 public class DriveSubsystem {
     private DcMotor front_left;
@@ -14,10 +14,10 @@ public class DriveSubsystem {
     private DcMotor back_right;
 
     public DriveSubsystem(HardwareMap hwmap, Telemetry tele){
-        this.front_left = hwmap.get(DcMotor.class, Constants.MOTOR_NAME_FL);
-        this.front_right = hwmap.get(DcMotor.class, Constants.MOTOR_NAME_FR);
-        this.back_left = hwmap.get(DcMotor.class, Constants.MOTOR_NAME_BL);
-        this.back_right = hwmap.get(DcMotor.class, Constants.MOTOR_NAME_BR);
+        this.front_left = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_FL);
+        this.front_right = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_FR);
+        this.back_left = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_BL);
+        this.back_right = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_BR);
 
         this.front_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.front_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

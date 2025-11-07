@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-public class Constants {
+public class OpmodeConstants {
     public static final double TRIGGER_TOLERANCE = 0.3;
 
     public static final String MOTOR_NAME_TURRET = "turret";

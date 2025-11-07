@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.OpmodeConstants;
 import org.firstinspires.ftc.teamcode.subsystems.constants.IntakeConstants;
 
 public class IntakeSubsystem {
@@ -25,10 +25,10 @@ public class IntakeSubsystem {
     };
 
     public IntakeSubsystem(HardwareMap hwmap, Telemetry tele){
-        this.intakeMotor = hwmap.get(DcMotor.class, Constants.MOTOR_NAME_INTAKE);
-        this.door0 = hwmap.get(Servo.class, Constants.SERVO_NAME_DOOR0);
-        this.door1 = hwmap.get(Servo.class, Constants.SERVO_NAME_DOOR1);
-        this.door2 = hwmap.get(Servo.class, Constants.SERVO_NAME_DOOR2);
+        this.intakeMotor = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_INTAKE);
+        this.door0 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_DOOR0);
+        this.door1 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_DOOR1);
+        this.door2 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_DOOR2);
 
         this.intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 

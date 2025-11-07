@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.OpmodeConstants;
 import org.firstinspires.ftc.teamcode.lib.PIDController;
 import org.firstinspires.ftc.teamcode.subsystems.constants.LauncherConstants;
 
@@ -23,8 +23,8 @@ public class LauncherSubsystem {
     public LauncherSubsystem(HardwareMap hwmap, Telemetry t){
         this.telemetry = t;
 
-        this.flywheel = hwmap.get(DcMotorEx.class, Constants.MOTOR_NAME_FLYWHEEL);
-        this.aim = hwmap.get(DcMotorEx.class, Constants.MOTOR_NAME_AIM);
+        this.flywheel = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_FLYWHEEL);
+        this.aim = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_AIM);
 
         this.flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         this.aim.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.OpmodeConstants;
 import org.firstinspires.ftc.teamcode.subsystems.constants.LimelightConstants;
 
 import java.util.List;
@@ -23,12 +23,12 @@ public class LimelightSubsystem {
     GoBildaPinpointDriver pinpoint;
     Pose3D recentPose;
     public LimelightSubsystem(HardwareMap hardwareMap, Telemetry telemetry){
-        this.limelight = hardwareMap.get(Limelight3A.class, Constants.LIMELIGHT_NAME);
+        this.limelight = hardwareMap.get(Limelight3A.class, OpmodeConstants.LIMELIGHT_NAME);
         this.telemetry = telemetry;
         telemetry.setMsTransmissionInterval(LimelightConstants.TRANSMISSION_INTERVAL);
         limelight.pipelineSwitch(LimelightConstants.DEFAULT_PIPELINE);
         limelight.start();
-        this.pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, Constants.PINPOINT_NAME);
+        this.pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, OpmodeConstants.PINPOINT_NAME);
         // TODO: pinpoint will likely be needed in some other class, so it should (maybe)...
         // be created in the superstructure and then accessed by superstructure.whatever
         // idk if we'd make pinpoint in superstructure or a pedro subsystem.

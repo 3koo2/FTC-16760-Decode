@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Constants;
+import org.firstinspires.ftc.teamcode.OpmodeConstants;
 import org.firstinspires.ftc.teamcode.lib.PIDController;
 import org.firstinspires.ftc.teamcode.subsystems.constants.TurretConstants;
 
@@ -20,7 +20,7 @@ public class TurretSubsystem {
     public TurretSubsystem(HardwareMap hwmap, Telemetry tele){
         this.telemetry = tele;
 
-        this.turret = hwmap.get(DcMotorEx.class, Constants.MOTOR_NAME_TURRET);
+        this.turret = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_TURRET);
         this.turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         this.turretPID = new PIDController(TurretConstants.Kp, TurretConstants.Ki, TurretConstants.Kd);
@@ -55,7 +55,7 @@ public class TurretSubsystem {
 
     public void operateTurret(Gamepad gamepad2){
         double rawPower = gamepad2.left_stick_x;
-        if (Math.abs(rawPower)>Constants.TRIGGER_TOLERANCE){
+        if (Math.abs(rawPower)> OpmodeConstants.TRIGGER_TOLERANCE){
             setRawPower(rawPower);
         }
 
