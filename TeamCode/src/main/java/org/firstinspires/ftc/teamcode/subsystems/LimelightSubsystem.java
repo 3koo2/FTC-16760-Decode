@@ -22,13 +22,13 @@ public class LimelightSubsystem {
     Telemetry telemetry;
     GoBildaPinpointDriver pinpoint;
     Pose3D recentPose;
-    public LimelightSubsystem(HardwareMap hardwareMap, Telemetry telemetry){
+    public LimelightSubsystem(HardwareMap hardwareMap, Telemetry telemetry, GoBildaPinpointDriver pinpoint){
         this.limelight = hardwareMap.get(Limelight3A.class, OpmodeConstants.LIMELIGHT_NAME);
         this.telemetry = telemetry;
         telemetry.setMsTransmissionInterval(LimelightConstants.TRANSMISSION_INTERVAL);
         limelight.pipelineSwitch(LimelightConstants.DEFAULT_PIPELINE);
         limelight.start();
-        this.pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, OpmodeConstants.PINPOINT_NAME);
+        this.pinpoint = pinpoint;
         // TODO: pinpoint will likely be needed in some other class, so it should (maybe)...
         // be created in the superstructure and then accessed by superstructure.whatever
         // idk if we'd make pinpoint in superstructure or a pedro subsystem.
@@ -37,19 +37,18 @@ public class LimelightSubsystem {
         // pass the limelight subsystem the GOBildaPinponitControllller... >??? probabloy this rather
         // than passing it a subsystme and having to like get it or something.
     }
-    public double getTagId(){
+    public LLResultTypes.FiducialResult getTagId(){
         limelight.pipelineSwitch(LimelightConstants.APRILTAG_PIPELINE);
         LLResult result = limelight.getLatestResult();
         if (result != null && result.isValid()) {
             List<LLResultTypes.FiducialResult> fiducialResults = result.getFiducialResults();
             if (!fiducialResults.isEmpty()) {
                 for (LLResultTypes.FiducialResult fr : fiducialResults) {
-                    int tagId = fr.getFiducialId();
-                    return tagId;
+                    return fr;
                 }
             }
         }
-        return 0;
+        return null;
     }
 
     public Pose2D getAvgPose(){

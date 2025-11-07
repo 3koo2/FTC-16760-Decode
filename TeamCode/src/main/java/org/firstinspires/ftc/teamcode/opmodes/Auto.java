@@ -33,7 +33,7 @@ public class Auto extends LinearOpMode {
         while (opModeIsActive()){
             switch (state) {
                 case READ_TAG:
-                    double read = superstructure.limelightSubsystem.getTagId();
+                    double read = superstructure.limelightSubsystem.getTagId().getFiducialId();
                     if (read != 0){
                         obeliskID = read;
                         state = AutoStates.FIRST_SHOOT;

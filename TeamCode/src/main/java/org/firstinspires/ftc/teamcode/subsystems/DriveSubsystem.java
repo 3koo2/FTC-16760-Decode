@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -23,6 +24,9 @@ public class DriveSubsystem {
         this.front_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.back_left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.back_right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        this.front_left.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.back_left.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void set(double fl, double fr, double bl, double br){

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.pedropathing.follower.Follower;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -19,6 +20,8 @@ public class Superstructure{
     public LimelightSubsystem limelightSubsystem;
     public Follower pedro;
 
+    public GoBildaPinpointDriver pinpoint;
+
     private Telemetry telemetry;
     public Superstructure(HardwareMap hwmap, Telemetry tele){
         this.telemetry = tele;
@@ -27,7 +30,8 @@ public class Superstructure{
         this.intake = new IntakeSubsystem(hwmap, tele);
         this.drive = new DriveSubsystem(hwmap, tele);
         this.launcher = new LauncherSubsystem(hwmap, tele);
-        this.limelightSubsystem = new LimelightSubsystem(hwmap, tele);
+        this.pinpoint = hwmap.get(GoBildaPinpointDriver.class, OpmodeConstants.PINPOINT_NAME);
+        this.limelightSubsystem = new LimelightSubsystem(hwmap, tele, this.pinpoint);
         this.pedro = Constants.createFollower(hwmap);
     }
 }
