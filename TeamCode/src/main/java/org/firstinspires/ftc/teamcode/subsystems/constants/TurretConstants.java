@@ -9,4 +9,8 @@ public final class TurretConstants {
     public static double Kp = 0;
     public static double Ki = 0;
     public static double Kd = 0;
+
+    public static int LOWER_LIMIT = -1000;
+    public static int UPPER_LIMIT = 1000;
+    public static double TICK_DEGREE_CONVERSION_FACTOR = 1;
 }

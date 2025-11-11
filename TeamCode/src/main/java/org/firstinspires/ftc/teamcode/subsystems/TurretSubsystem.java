@@ -1,28 +1,33 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.OpmodeConstants;
 import org.firstinspires.ftc.teamcode.lib.PIDController;
 import org.firstinspires.ftc.teamcode.subsystems.constants.TurretConstants;
 
 public class TurretSubsystem {
     private DcMotorEx turret;
+    private GoBildaPinpointDriver pinpoint;
     private int turretSetpoint = 0;
 
     private PIDController turretPID;
 
     private Telemetry telemetry;
-    public TurretSubsystem(HardwareMap hwmap, Telemetry tele){
+    public TurretSubsystem(HardwareMap hwmap, Telemetry tele, GoBildaPinpointDriver pinpoint){
         this.telemetry = tele;
 
         this.turret = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_TURRET);
         this.turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        this.pinpoint = pinpoint;
         this.turretPID = new PIDController(TurretConstants.Kp, TurretConstants.Ki, TurretConstants.Kd);
     }
 
@@ -34,14 +39,34 @@ public class TurretSubsystem {
         return this.turret.getCurrentPosition();
     }
 
-    public void getTurretPositionInSpace(){
-        //define later (field-centric, maybe idk)
+
+
+    public boolean setSetpoint(int position){
+        boolean range = TurretConstants.LOWER_LIMIT < position && position < TurretConstants.UPPER_LIMIT;
+        if (range) this.turretSetpoint = position;
+        return range;
     }
 
-    public void setSetpoint(int position){
-        this.turretSetpoint = position;
+    public boolean moveOffset(double angle){
+        return setSetpoint((int)(angle*TurretConstants.TICK_DEGREE_CONVERSION_FACTOR));
     }
 
+    public boolean pointTowardsFieldCentric(Pose2D target){
+        Pose2D robot = pinpoint.getPosition();
+        double rx = robot.getX(DistanceUnit.INCH);
+        double ry = robot.getY(DistanceUnit.INCH);
+
+        double tx = target.getX(DistanceUnit.INCH);
+        double ty = target.getY(DistanceUnit.INCH);
+        // x and y might be switched ngl idk sometimes they do that.
+        double dx = tx-rx;
+        double dy=ty-ry;
+
+        double angle = 180*Math.atan(dx/dy)/Math.PI;
+        angle += pinpoint.getHeading(AngleUnit.DEGREES); // heading from forward-(x)
+
+        return moveOffset(angle);
+    }
     public void goToSetpoint(){
         // something with pid,
         // this should do something.
@@ -77,5 +102,4 @@ public class TurretSubsystem {
 
         goToSetpoint();
     }
-
 }
