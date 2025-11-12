@@ -26,11 +26,11 @@ public class Superstructure{
     public Superstructure(HardwareMap hwmap, Telemetry tele){
         this.telemetry = tele;
 
-        this.turret = new TurretSubsystem(hwmap, tele);
         this.intake = new IntakeSubsystem(hwmap, tele);
         this.drive = new DriveSubsystem(hwmap, tele);
         this.launcher = new LauncherSubsystem(hwmap, tele);
         this.pinpoint = hwmap.get(GoBildaPinpointDriver.class, OpmodeConstants.PINPOINT_NAME);
+        this.turret = new TurretSubsystem(hwmap, tele, pinpoint);
         this.limelightSubsystem = new LimelightSubsystem(hwmap, tele, this.pinpoint);
         this.pedro = Constants.createFollower(hwmap);
     }
