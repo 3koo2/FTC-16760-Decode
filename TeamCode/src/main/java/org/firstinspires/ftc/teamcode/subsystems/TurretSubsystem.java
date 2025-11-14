@@ -29,6 +29,8 @@ public class TurretSubsystem {
         this.turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.pinpoint = pinpoint;
         this.turretPID = new PIDController(TurretConstants.Kp, TurretConstants.Ki, TurretConstants.Kd);
+
+        this.turretPID.setTelemetry(tele);
     }
 
     public void setRawPower(double power){
@@ -52,7 +54,9 @@ public class TurretSubsystem {
     }
 
     public boolean pointTowardsFieldCentric(Pose2D target){
-        Pose2D robot = pinpoint.getPosition();
+        return pointTowardsFieldCentric(target, pinpoint.getPosition());
+    }
+    public boolean pointTowardsFieldCentric(Pose2D target, Pose2D robot){
         double rx = robot.getX(DistanceUnit.INCH);
         double ry = robot.getY(DistanceUnit.INCH);
 
@@ -63,10 +67,11 @@ public class TurretSubsystem {
         double dy=ty-ry;
 
         double angle = 180*Math.atan(dx/dy)/Math.PI;
-        angle += pinpoint.getHeading(AngleUnit.DEGREES); // heading from forward-(x)
-
+        angle += robot.getHeading(AngleUnit.DEGREES); // heading from forward-(x)
+        telemetry.addData("targetangle", angle);
         return moveOffset(angle);
     }
+
     public void goToSetpoint(){
         // something with pid,
         // this should do something.
