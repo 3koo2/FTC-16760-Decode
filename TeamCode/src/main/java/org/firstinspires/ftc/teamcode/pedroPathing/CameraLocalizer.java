@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import com.pedropathing.ftc.PoseConverter;
-import com.pedropathing.geometry.CoordinateSystem;
 import com.pedropathing.geometry.PedroCoordinates;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.localization.Localizer;
@@ -27,13 +26,15 @@ public class CameraLocalizer implements Localizer {
     private Pose startPose;
     private Pose currentVelocity;
     private Pose calculatedPose;
-    private double maximumLLAngleVelo;
-    private double maximumLLUpdateTime;
+    private final double maximumLLAngleVelo;
+    private final double maximumLLUpdateTime;
 
     public CameraLocalizer(HardwareMap hwMap, CameraConstants constants){this(hwMap, constants, new Pose());}
+
+    //Basically the same constructor as the pinpoint localizer but makes a limelight also and grabs its constants
     public CameraLocalizer(HardwareMap hwMap, CameraConstants constants, Pose setStartPose){
         odo = hwMap.get(GoBildaPinpointDriver.class, constants.hardwareMapName);
-        odo.setOffsets(constants.forwardPodY, constants.strafePodX, constants.distanceUnit);
+        setOffsets(constants.forwardPodY, constants.strafePodX, constants.distanceUnit);
         if(constants.yawScalar.isPresent()) {
             odo.setYawScalar(constants.yawScalar.getAsDouble());
         }
@@ -85,6 +86,8 @@ public class CameraLocalizer implements Localizer {
         return currentVelocity.getAsVector();
     }
 
+    //I'm not sure about this function. It doesn't seem like megatag2 will let me tell it a pose
+    //at all so this might not work with pedro. I just have it set the odometry pose for now
     @Override
     public void setPose(Pose setPose) {
         odo.setPosition(PoseConverter.poseToPose2D(setPose, PedroCoordinates.INSTANCE));
@@ -92,6 +95,9 @@ public class CameraLocalizer implements Localizer {
         previousHeading = setPose.getHeading();
     }
 
+//  Grabs stuff from ll/megatag if it's slow enough and recent enough, if not pose is estimated
+//  off of pinpoint. I might do a thing that looks at current pose - previous pose over time so
+//  we actually use mt2 for velocity. Maybe mt2 is good for just pose and pinpoint is good for motion
     @Override
     public void update() {
         ll.updateRobotOrientation(odo.getHeading(AngleUnit.DEGREES));
@@ -113,6 +119,7 @@ public class CameraLocalizer implements Localizer {
         totalHeading += MathFunctions.getSmallestAngleDifference(mt2poseGood.getHeading(), previousHeading);
         previousHeading = mt2poseGood.getHeading();
         calculatedPose = mt2poseGood;
+        odo.setPosition(PoseConverter.poseToPose2D(mt2poseGood, PedroCoordinates.INSTANCE));
         currentVelocity = new Pose(odo.getVelX(DistanceUnit.INCH), odo.getVelY(DistanceUnit.INCH), odo.getHeading(AngleUnit.RADIANS)); // TODO: Maybe calculate velocity with megatag
     }
 
@@ -167,7 +174,7 @@ public class CameraLocalizer implements Localizer {
      * This resets the IMU of the localizer, if applicable.
      */
     @Override
-    public void resetIMU() throws InterruptedException {
+    public void resetIMU() {
         resetPinpoint();
     }
 
@@ -210,6 +217,7 @@ public class CameraLocalizer implements Localizer {
         this.startPose = setStart;
     }
 
+    //Needed to process MT2 poses
     public Pose poseFromPose3d(Pose3D pose){
         return new Pose(
                 pose.getPosition().x,
