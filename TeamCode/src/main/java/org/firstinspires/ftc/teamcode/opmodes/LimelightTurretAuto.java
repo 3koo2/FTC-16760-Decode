@@ -15,9 +15,17 @@ import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 public class LimelightTurretAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
+
         GoBildaPinpointDriver pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
+
+
+        pinpoint.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
+        pinpoint.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.REVERSED);
+        pinpoint.setOffsets(3.5,9.5,DistanceUnit.INCH);
+        pinpoint.recalibrateIMU();
+        pinpoint.resetPosAndIMU();
         TurretSubsystem turret = new TurretSubsystem(hardwareMap, telemetry, pinpoint);
-        Pose2D tagPose = new Pose2D(DistanceUnit.INCH, 26,26, AngleUnit.DEGREES, 0);
+        Pose2D tagPose = new Pose2D(DistanceUnit.INCH, 48,48, AngleUnit.DEGREES, 0);
         DriveSubsystem drive = new DriveSubsystem(hardwareMap, telemetry);
 
         waitForStart();

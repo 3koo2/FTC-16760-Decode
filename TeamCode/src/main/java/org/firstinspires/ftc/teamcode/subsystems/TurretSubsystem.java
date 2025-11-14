@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.OpmodeConstants;
+import org.firstinspires.ftc.teamcode.lib.General;
 import org.firstinspires.ftc.teamcode.lib.PIDController;
 import org.firstinspires.ftc.teamcode.subsystems.constants.TurretConstants;
 
@@ -26,6 +27,9 @@ public class TurretSubsystem {
         this.telemetry = tele;
 
         this.turret = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_TURRET);
+
+        General.resetEncoders(this.turret);
+
         this.turret.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.pinpoint = pinpoint;
         this.turretPID = new PIDController(TurretConstants.Kp, TurretConstants.Ki, TurretConstants.Kd);
@@ -54,7 +58,12 @@ public class TurretSubsystem {
     }
 
     public boolean pointTowardsFieldCentric(Pose2D target){
-        return pointTowardsFieldCentric(target, pinpoint.getPosition());
+        pinpoint.update();
+        Pose2D robot = pinpoint.getPosition();//new Pose2D(DistanceUnit.INCH, pinpoint.getPosX(DistanceUnit.INCH), pinpoint.getPosY(DistanceUnit.INCH), AngleUnit.DEGREES, pinpoint.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("heading", robot.getHeading(AngleUnit.DEGREES));
+        telemetry.addData("robotx", robot.getX(DistanceUnit.INCH));
+        telemetry.addData("roboty", robot.getY(DistanceUnit.INCH));
+        return pointTowardsFieldCentric(target, robot);
     }
     public boolean pointTowardsFieldCentric(Pose2D target, Pose2D robot){
         double rx = robot.getX(DistanceUnit.INCH);
@@ -66,7 +75,7 @@ public class TurretSubsystem {
         double dx = tx-rx;
         double dy=ty-ry;
 
-        double angle = 180*Math.atan(dx/dy)/Math.PI;
+        double angle = 180*Math.atan(dy/dx)/Math.PI; // x and y switched
         angle += robot.getHeading(AngleUnit.DEGREES); // heading from forward-(x)
         telemetry.addData("targetangle", angle);
         return moveOffset(angle);
