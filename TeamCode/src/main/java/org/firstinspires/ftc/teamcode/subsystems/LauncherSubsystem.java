@@ -15,7 +15,6 @@ public class LauncherSubsystem {
     private DcMotorEx flywheel;
     private DcMotorEx aim;
     private int aimSetpoint = 0;
-
     private double flywheelVelocity = 0;
 
     private PIDController aimPID, flywheelPID;
@@ -42,9 +41,10 @@ public class LauncherSubsystem {
         );
     }
 
-    public void aimLauncher(int setpoint){
-        // use PID
-        this.aimSetpoint = 0;
+    public boolean aimLauncher(int setpoint){
+        if (setpoint > LauncherConstants.AIM_MAX || setpoint < LauncherConstants.AIM_MIN) return false;
+        this.aimSetpoint = setpoint;
+        return true;
     }
 
     public void goToAim(){

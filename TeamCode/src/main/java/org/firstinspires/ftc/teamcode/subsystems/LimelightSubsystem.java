@@ -21,7 +21,7 @@ public class LimelightSubsystem {
     Limelight3A limelight;
     Telemetry telemetry;
     GoBildaPinpointDriver pinpoint;
-    Pose3D recentPose;
+    Pose2D recentPose;
 
     public LimelightSubsystem(HardwareMap hardwareMap, Telemetry telemetry, GoBildaPinpointDriver pinpoint) {
         this.limelight = hardwareMap.get(Limelight3A.class, OpmodeConstants.LIMELIGHT_NAME);
@@ -30,6 +30,7 @@ public class LimelightSubsystem {
         limelight.pipelineSwitch(LimelightConstants.DEFAULT_PIPELINE);
         limelight.start();
         this.pinpoint = pinpoint;
+        recentPose = new Pose2D(DistanceUnit.INCH, 0 ,0, AngleUnit.DEGREES, 0);
         // TODO: pinpoint will likely be needed in some other class, so it should (maybe)...
         // be created in the superstructure and then accessed by superstructure.whatever
         // idk if we'd make pinpoint in superstructure or a pedro subsystem.
@@ -66,6 +67,26 @@ public class LimelightSubsystem {
                 AngleUnit.DEGREES,
                 (mt2pose.getOrientation().getYaw(AngleUnit.DEGREES) * llWeight) + (pinpoint.getHeading(AngleUnit.DEGREES) * pinpointWeight)
         );
+    }
+
+    public Pose2D getAvgPoseNoPoint() {
+        limelight.updateRobotOrientation(recentPose.getHeading(AngleUnit.DEGREES));
+        LLResult res = limelight.getLatestResult();
+        if (res == null || !res.isValid()) return recentPose;
+        Pose3D mt2pose = res.getBotpose_MT2();
+        if (mt2pose == null) return recentPose;
+//        double llWeight = (1.0 / pinpoint.getHeadingVelocity(UnnormalizedAngleUnit.DEGREES)) * (1.0 / limelight.getTimeSinceLastUpdate());
+//        double pinpointWeight = 1.0 - llWeight;
+//        return new Pose2D(
+//                DistanceUnit.INCH,
+//                (mt2pose.getPosition().x * llWeight) + (pinpoint.getPosition().getX(DistanceUnit.INCH) * pinpointWeight),
+//                (mt2pose.getPosition().y * llWeight) + (pinpoint.getPosition().getY(DistanceUnit.INCH) * pinpointWeight),
+//                AngleUnit.DEGREES,
+//                (mt2pose.getOrientation().getYaw(AngleUnit.DEGREES) * llWeight) + (pinpoint.getHeading(AngleUnit.DEGREES) * pinpointWeight)
+//        );
+        Pose2D mt2pose2d = new Pose2D(DistanceUnit.INCH, mt2pose.getPosition().x, mt2pose.getPosition().y, AngleUnit.DEGREES, mt2pose.getOrientation().getYaw());
+        recentPose = mt2pose2d;
+        return mt2pose2d;
     }
 
     //  Should this really be like this for the subsystem? I feel like it would be nice if we just

@@ -8,6 +8,9 @@ public final class LauncherConstants {
     public static final double aimKp = 0;
     public static final double aimKi = 0;
     public static final double aimKd = 0;
+    public static final int AIM_MAX = 45;
+    public static final int AIM_MIN = -45;
+
 
     //TODO: tune pid
 

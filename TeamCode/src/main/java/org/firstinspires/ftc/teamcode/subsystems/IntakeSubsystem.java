@@ -18,13 +18,15 @@ public class IntakeSubsystem {
     private boolean toggle_intakeOn;
     private boolean intaking;
 
+    private final Telemetry telemetry;
+
     public enum Door{
         DOOR0,
         DOOR1,
         DOOR2
     };
 
-    public IntakeSubsystem(HardwareMap hwmap, Telemetry tele){
+    public IntakeSubsystem(HardwareMap hwmap, Telemetry telemetry){
         this.intakeMotor = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_INTAKE);
         this.door0 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_DOOR0);
         this.door1 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_DOOR1);
@@ -34,6 +36,7 @@ public class IntakeSubsystem {
 
         this.toggle_intakeOn = false;
         this.intaking = false;
+        this.telemetry = telemetry;
     }
 
     public void closeAllDoors(){
