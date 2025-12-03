@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
@@ -66,6 +67,16 @@ public class LimelightSubsystem {
                 AngleUnit.DEGREES,
                 (mt2pose.getOrientation().getYaw(AngleUnit.DEGREES) * llWeight) + (pinpoint.getHeading(AngleUnit.DEGREES) * pinpointWeight)
         );
+    }
+
+    public Pose3D getLimelightOnlyPose(double yaw){
+        limelight.updateRobotOrientation(yaw);
+
+        LLResult res = limelight.getLatestResult();
+
+        Pose3D megatag2 = res.getBotpose_MT2();
+
+        return megatag2;
     }
 
     //  Should this really be like this for the subsystem? I feel like it would be nice if we just

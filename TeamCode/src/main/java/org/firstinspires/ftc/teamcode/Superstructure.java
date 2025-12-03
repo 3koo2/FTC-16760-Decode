@@ -10,13 +10,19 @@ import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LauncherSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LimelightSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.MinimalIntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.MinimalLauncherSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.TurretSubsystem;
 
 public class Superstructure{
     public TurretSubsystem turret;
     public IntakeSubsystem intake;
+    public MinimalIntakeSubsystem mintake;
+
     public DriveSubsystem drive;
     public LauncherSubsystem launcher;
+    public MinimalLauncherSubsystem mlauncher;
+
     public LimelightSubsystem limelightSubsystem;
     public Follower pedro;
 
@@ -26,12 +32,13 @@ public class Superstructure{
     public Superstructure(HardwareMap hwmap, Telemetry tele){
         this.telemetry = tele;
 
-        this.turret = new TurretSubsystem(hwmap, tele);
-        this.intake = new IntakeSubsystem(hwmap, tele);
+        // temporary disable
+        // this.turret = new TurretSubsystem(hwmap, tele);
+        this.mintake = new MinimalIntakeSubsystem(hwmap, tele);
         this.drive = new DriveSubsystem(hwmap, tele);
-        this.launcher = new LauncherSubsystem(hwmap, tele);
-        this.pinpoint = hwmap.get(GoBildaPinpointDriver.class, OpmodeConstants.PINPOINT_NAME);
-        this.limelightSubsystem = new LimelightSubsystem(hwmap, tele, this.pinpoint);
-        this.pedro = Constants.createFollower(hwmap);
+        this.mlauncher = new MinimalLauncherSubsystem(hwmap, tele);
+        //this.pinpoint = hwmap.get(GoBildaPinpointDriver.class, OpmodeConstants.PINPOINT_NAME);
+        //this.limelightSubsystem = new LimelightSubsystem(hwmap, tele, null);
+        //this.pedro = Constants.createFollower(hwmap);
     }
 }

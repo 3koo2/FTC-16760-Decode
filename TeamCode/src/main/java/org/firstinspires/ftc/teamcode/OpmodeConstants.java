@@ -9,6 +9,10 @@ public class OpmodeConstants {
     public static final String SERVO_NAME_DOOR0 = "door0";
     public static final String SERVO_NAME_DOOR1 = "door1";
     public static final String SERVO_NAME_DOOR2 = "door2";
+    public static final String SERVO_NAME_FEED0 = "feed0";
+    public static final String SERVO_NAME_FEED1 = "feed1";
+    public static final String SERVO_NAME_FEED2 = "feed2";
+
 
     public static final String MOTOR_NAME_FL = "fl";
     public static final String MOTOR_NAME_FR = "fr";

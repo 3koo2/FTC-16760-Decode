@@ -2,13 +2,14 @@ package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.lib.PIDController;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LimelightSubsystem;
-
 @Autonomous(name="LimelightAuto")
+@Disabled
 public class LimelightAuto extends LinearOpMode {
     private LimelightSubsystem limelight;
     private DriveSubsystem driveSubsystem;
