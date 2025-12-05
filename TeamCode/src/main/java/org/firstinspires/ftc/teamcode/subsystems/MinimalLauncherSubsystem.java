@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -28,6 +29,7 @@ public class MinimalLauncherSubsystem {
         this.flywheel = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_FLYWHEEL);
 
         this.flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        this.flywheel.setDirection(DcMotorSimple.Direction.FORWARD);
 
         this.flywheelPID = new PIDController(
                 LauncherConstants.flywheelKp,
