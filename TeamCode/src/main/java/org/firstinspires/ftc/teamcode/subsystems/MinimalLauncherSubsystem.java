@@ -18,6 +18,10 @@ public class MinimalLauncherSubsystem {
 
     private PIDController flywheelPID;
 
+    private double poweriterator = 0.5;
+
+    private boolean stepperkeydown = false;
+
     public MinimalLauncherSubsystem(HardwareMap hwmap, Telemetry t){
         this.telemetry = t;
 
@@ -29,7 +33,7 @@ public class MinimalLauncherSubsystem {
                 LauncherConstants.flywheelKp,
                 LauncherConstants.flywheelKi,
                 LauncherConstants.flywheelKd
-        ); // yo idk bout this
+        ); // yo idk bout this. i've disabled it for now.
     }
 
     public void enableFlywheel(double velocity){
@@ -59,6 +63,7 @@ public class MinimalLauncherSubsystem {
 
         boolean fixedlaunch = gamepad2.right_trigger > OpmodeConstants.TRIGGER_TOLERANCE;
 
+        /*
         if (fixedlaunch){
             enableFlywheel(calculated_velocity);
         }
@@ -67,6 +72,37 @@ public class MinimalLauncherSubsystem {
         }
 
         // do stuff:
-        moveFlywheel();
+        moveFlywheel();*/
+
+        if (fixedlaunch){
+            this.flywheel.setPower(this.poweriterator);
+        }
+        this.telemetry.addLine("Flywheel active",fixedlaunch);
+        boolean stepup = gamepad2.dpad_up;
+        boolean stepdown = gamepad2.dpad_down;
+
+        if (stepup && !stepperkeydown){
+            this.poweriterator+=0.1;
+        }
+        else if (stepdown && !stepperkeydown){
+            this.poweriterator-=0.1;
+        }
+
+        if (this.poweriterator>1){
+            this.poweriterator=1;
+        }
+        if (this.poweriterator<0){
+            this.poweriterator=0;
+        }
+
+        if (gamepad2.a){
+            this.poweriterator=1;
+        }
+        if (gamepad2.b){
+            this.poweriterator=0.6; // some easy to use presets?
+        }
+
+        this.telemetry.addLine("Flywheel Power", this.poweriterator);
+        
     }
 }
