@@ -4,6 +4,8 @@ public class OpmodeConstants {
     public static final double TRIGGER_TOLERANCE = 0.3;
 
     public static final String MOTOR_NAME_TURRET = "turret";
+    public static final String MOTOR_NAME_FEEDER = "shootFeeder";
+    public static final double FEEDER_POWER = 1;
 
     public static final String MOTOR_NAME_INTAKE = "intake";
     public static final String SERVO_NAME_DOOR0 = "door0";

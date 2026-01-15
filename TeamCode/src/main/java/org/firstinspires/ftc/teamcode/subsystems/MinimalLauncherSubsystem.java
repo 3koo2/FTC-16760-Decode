@@ -15,6 +15,8 @@ public class MinimalLauncherSubsystem {
     private Telemetry telemetry;
     private DcMotorEx flywheel;
 
+    private DcMotorEx feeder;
+
     private double flywheelVelocity = 0;
 
     private PIDController flywheelPID;
@@ -27,6 +29,7 @@ public class MinimalLauncherSubsystem {
         this.telemetry = t;
 
         this.flywheel = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_FLYWHEEL);
+        this.feeder = hwmap.get(DcMotorEx.class, OpmodeConstants.MOTOR_NAME_FEEDER);
 
         this.flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         this.flywheel.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -78,9 +81,11 @@ public class MinimalLauncherSubsystem {
 
         if (fixedlaunch){
             this.flywheel.setPower(this.poweriterator);
+            this.feeder.setPower(OpmodeConstants.FEEDER_POWER);
         }
         else{
             this.flywheel.setPower(0);
+            this.feeder.setPower(0);
         }
         this.telemetry.addData("Flywheel active",fixedlaunch);
         boolean stepup = gamepad2.dpad_up;
