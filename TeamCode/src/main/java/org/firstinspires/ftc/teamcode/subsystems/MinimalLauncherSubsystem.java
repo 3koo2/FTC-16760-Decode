@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.constants.LauncherConstants;
 
 public class MinimalLauncherSubsystem {
     private Telemetry telemetry;
-    private DcMotorEx flywheel;
+    public DcMotorEx flywheel;
 
     private DcMotorEx feeder;
 
@@ -23,7 +23,7 @@ public class MinimalLauncherSubsystem {
 
     private double poweriterator = 0.5;
 
-    private boolean stepperkeydown = false;
+    public boolean stepperkeydown = false;
 
     public MinimalLauncherSubsystem(HardwareMap hwmap, Telemetry t){
         this.telemetry = t;
@@ -42,10 +42,11 @@ public class MinimalLauncherSubsystem {
     }
 
     public void enableFlywheel(double velocity){
-        this.flywheelVelocity = velocity;
+        this.flywheel.setVelocity(1400);
     }
 
     public void stopFlywheel(){
+
         this.flywheelVelocity = 0;
     }
 
@@ -68,7 +69,7 @@ public class MinimalLauncherSubsystem {
 
         boolean fixedlaunch = gamepad2.right_trigger > OpmodeConstants.TRIGGER_TOLERANCE;
 
-        /*
+
         if (fixedlaunch){
             enableFlywheel(calculated_velocity);
         }
@@ -77,7 +78,6 @@ public class MinimalLauncherSubsystem {
         }
 
         // do stuff:
-        moveFlywheel();*/
 
         if (fixedlaunch){
             this.flywheel.setPower(this.poweriterator);
@@ -114,6 +114,7 @@ public class MinimalLauncherSubsystem {
         stepperkeydown = stepdown || stepup;
 
         this.telemetry.addData("Flywheel Power", this.poweriterator);
-        
+        this.telemetry.addData("Right Trigger", gamepad2.right_trigger);
+        telemetry.update();
     }
 }

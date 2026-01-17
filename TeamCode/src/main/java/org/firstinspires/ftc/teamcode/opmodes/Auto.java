@@ -43,7 +43,7 @@ public class Auto extends LinearOpMode {
                     //TODO: Line up to shoot the starting balls
                     break;
                 case FIRST_SHOOT:
-                    superstructure.launcher.moveFlywheel();
+//                    superstructure.launcher.moveFlywheel();
                     break;
                 case LINE_UP_INTAKE:
                     //TODO: Drive up to the line we intake

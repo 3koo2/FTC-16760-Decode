@@ -9,10 +9,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.OpmodeConstants;
 
 public class DriveSubsystem {
-    private DcMotor front_left;
-    private DcMotor front_right;
-    private DcMotor back_left;
-    private DcMotor back_right;
+    public DcMotor front_left;
+    public DcMotor front_right;
+    public DcMotor back_left;
+    public DcMotor back_right;
+    double fl = 0;
+    double fr = 0;
+    double br = 0;
+    double bl = 0;
 
     public DriveSubsystem(HardwareMap hwmap, Telemetry tele){
         this.front_left = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_FL);
