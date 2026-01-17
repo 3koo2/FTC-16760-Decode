@@ -21,9 +21,9 @@ public class MinimalIntakeSubsystem{
 
     public MinimalIntakeSubsystem(HardwareMap hwmap, Telemetry tele){
         this.intakeMotor = hwmap.get(DcMotor.class, OpmodeConstants.MOTOR_NAME_INTAKE);
-        this.feed0 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_FEED0);
-        this.feed1 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_FEED1);
-        this.feed2 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_FEED2);
+//        this.feed0 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_FEED0);
+//        this.feed1 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_FEED1);
+//        this.feed2 = hwmap.get(Servo.class, OpmodeConstants.SERVO_NAME_FEED2);
 
         this.intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -33,21 +33,21 @@ public class MinimalIntakeSubsystem{
     }
 
     public void runIntake(double mult){
-        double p0 = mult;
-        double p1 = -mult;
-        double p2 = mult;
-
-        p0+=1;
-        p1+=1;
-        p2+=1;
-
-        p0/=2;
-        p1/=2;
-        p2/=1;
-
-        feed0.setPosition(p0);
-        feed1.setPosition(p1);
-        feed2.setPosition(p2);
+//        double p0 = mult;
+//        double p1 = -mult;
+//        double p2 = mult;
+//
+//        p0+=1;
+//        p1+=1;
+//        p2+=1;
+//
+//        p0/=2;
+//        p1/=2;
+//        p2/=1;
+//
+//        feed0.setPosition(p0);
+//        feed1.setPosition(p1);
+//        feed2.setPosition(p2);
 
         this.intakeMotor.setPower(mult);
     }

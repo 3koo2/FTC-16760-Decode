@@ -82,8 +82,7 @@ public class MinimalLauncherSubsystem {
         if (fixedlaunch){
             this.flywheel.setPower(this.poweriterator);
             this.feeder.setPower(OpmodeConstants.FEEDER_POWER);
-        }
-        else{
+        } else {
             this.flywheel.setPower(0);
             this.feeder.setPower(0);
         }
@@ -111,6 +110,8 @@ public class MinimalLauncherSubsystem {
         if (gamepad2.b){
             this.poweriterator=0.6; // some easy to use presets?
         }
+
+        stepperkeydown = stepdown || stepup;
 
         this.telemetry.addData("Flywheel Power", this.poweriterator);
         
