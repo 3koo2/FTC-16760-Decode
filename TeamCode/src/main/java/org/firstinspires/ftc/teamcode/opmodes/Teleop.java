@@ -54,6 +54,13 @@ public class Teleop extends LinearOpMode {
             // other player controls:
             this.superstructure.mintake.operateIntake(gamepad1);
             //this.superstructure.turret.operateTurret(gamepad2);
+//
+//            if (gamepad1.xWasPressed()){
+//                this.superstructure.mlauncher.flywheel.setVelocity(1400);
+//            } else {
+//                this.superstructure.mlauncher.flywheel.setVelocity(0);
+//            }
+
             this.superstructure.mlauncher.controlLauncher(gamepad1);
 
             telemetry.update();

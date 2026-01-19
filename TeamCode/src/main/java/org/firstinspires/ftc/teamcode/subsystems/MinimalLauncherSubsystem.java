@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.constants.LauncherConstants;
 
 public class MinimalLauncherSubsystem {
     private Telemetry telemetry;
-    private DcMotorEx flywheel;
+    public DcMotorEx flywheel;
 
     private DcMotorEx feeder;
 
@@ -64,7 +64,7 @@ public class MinimalLauncherSubsystem {
 
         // run some calculation for flywheel veloci.
 
-        double calculated_velocity = LauncherConstants.MAXIMUM_FLYWHEEL_VELOCITY;
+//        double calculated_velocity = LauncherConstants.MAXIMUM_FLYWHEEL_VELOCITY;
 
         boolean fixedlaunch = gamepad2.right_trigger > OpmodeConstants.TRIGGER_TOLERANCE;
 
