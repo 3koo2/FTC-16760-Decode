@@ -24,7 +24,7 @@ public class Teleop extends OpMode{
 
     //private Limelight3A ll;
     @Override
-    public void init() {
+    public void init() { // why is this an iterative opmode? who wrote this, Lucas Mendonca? ig it works but wwwwwwwwwwwwwwwwhat??????
 
             this.mlaunchsub = new MinimalLauncherSubsystem(hardwareMap, telemetry);
             this.superstructure = new Superstructure(hardwareMap, telemetry);
@@ -59,7 +59,7 @@ public class Teleop extends OpMode{
                 // other player controls:
                 this.superstructure.mintake.operateIntake(gamepad1);
                 //this.superstructure.turret.operateTurret(gamepad2);
-                if (gamepad1.xWasPressed()) {
+                if (gamepad1.xWasPressed()) { /// what is this command? isn't it just 'gamepad1.x'?
                     hardwareMap.get(DcMotorEx.class, "flywheel").setVelocity(1400);
 
                 }
