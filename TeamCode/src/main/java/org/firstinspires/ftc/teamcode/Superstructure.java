@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.FeedSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LauncherSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LimelightSubsystem;
@@ -22,6 +23,7 @@ public class Superstructure{
     public DriveSubsystem drive;
     public LauncherSubsystem launcher;
     public MinimalLauncherSubsystem mlauncher;
+    public FeedSubsystem mfeeder;
 
     public LimelightSubsystem limelightSubsystem;
     public Follower pedro;
@@ -37,6 +39,7 @@ public class Superstructure{
         this.mintake = new MinimalIntakeSubsystem(hwmap, tele);
         this.drive = new DriveSubsystem(hwmap, tele);
         this.mlauncher = new MinimalLauncherSubsystem(hwmap, tele);
+        this.mfeeder = new FeedSubsystem(hwmap, tele);
         //this.pinpoint = hwmap.get(GoBildaPinpointDriver.class, OpmodeConstants.PINPOINT_NAME);
         //this.limelightSubsystem = new LimelightSubsystem(hwmap, tele, null);
         //this.pedro = Constants.createFollower(hwmap);

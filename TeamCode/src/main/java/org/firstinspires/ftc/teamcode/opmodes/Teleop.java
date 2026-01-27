@@ -62,6 +62,7 @@ public class Teleop extends LinearOpMode {
 //            }
 
             this.superstructure.mlauncher.controlLauncher(gamepad1);
+            this.superstructure.mfeeder.runFeed(gamepad1);
 
             telemetry.update();
         }
