@@ -23,9 +23,9 @@ public class FeedSubsystem {
 
     }
 
-    public void run(){
-        feed0.setPosition(1);
-        feed1.setPosition(1);
+    public void run(int power){
+        feed0.setPosition(power);
+        feed1.setPosition(power);
     }
 
     public void stop(){
@@ -34,6 +34,14 @@ public class FeedSubsystem {
     }
 
     public void runFeed(Gamepad gamepad){
-        if (true){} ///todo: this
+        if (gamepad.dpad_right){
+            run(1);
+        }
+        else if (gamepad.dpad_left){
+            run(0);
+        }
+        else{
+            stop();
+        }
     }
 }
