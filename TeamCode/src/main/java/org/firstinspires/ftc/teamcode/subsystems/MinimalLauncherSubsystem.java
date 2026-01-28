@@ -79,7 +79,7 @@ public class MinimalLauncherSubsystem {
         // do stuff:
         moveFlywheel();*/
 
-        if (fixedlaunch){
+        if (fixedlaunch){ // is there a way to do flywheel without feeder?
             this.flywheel.setPower(this.poweriterator);
             this.feeder.setPower(OpmodeConstants.FEEDER_POWER);
         } else {
