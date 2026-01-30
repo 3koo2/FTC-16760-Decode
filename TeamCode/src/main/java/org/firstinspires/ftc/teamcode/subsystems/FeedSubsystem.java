@@ -18,7 +18,7 @@ public class FeedSubsystem {
 
         // two continuous servos
         feed0.setDirection(Servo.Direction.FORWARD);
-//        feed1.setDirection(Servo.Direction.FORWARD);
+//        feed1.setDirection(Servo.Direction.REVERSE);
 
 
     }
