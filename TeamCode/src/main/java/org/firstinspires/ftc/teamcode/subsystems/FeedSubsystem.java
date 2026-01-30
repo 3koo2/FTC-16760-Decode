@@ -28,14 +28,21 @@ public class FeedSubsystem {
 //        feed1.setPosition(1);
     }
 
+    public void outtake(){
+        feed0.setPosition(-1);
+//        feed1.setPosition(1);
+    }
+
     public void stop(){
         feed0.setPosition(0.5);
 //        feed1.setPosition(0.5);
     }
 
     public void runFeed(Gamepad gamepad){
-        if (gamepad.b) {
+        if (gamepad.x) {
             run();
+        } else if (gamepad.y){
+            outtake();
         } else {
             stop();
         }

@@ -24,6 +24,8 @@ public class MinimalLauncherSubsystem {
     private double poweriterator = 0.5;
 
     private boolean stepperkeydown = false;
+    boolean launchWasPressed = false;
+    boolean fixedlaunch = false;
 
     public MinimalLauncherSubsystem(HardwareMap hwmap, Telemetry t){
         this.telemetry = t;
@@ -66,7 +68,12 @@ public class MinimalLauncherSubsystem {
 
 //        double calculated_velocity = LauncherConstants.MAXIMUM_FLYWHEEL_VELOCITY;
 
-        boolean fixedlaunch = gamepad2.right_trigger > OpmodeConstants.TRIGGER_TOLERANCE;
+        boolean rightTrigPressed = gamepad2.right_trigger > OpmodeConstants.TRIGGER_TOLERANCE;
+
+        boolean toggle = rightTrigPressed && !launchWasPressed;
+
+
+        if (toggle) fixedlaunch = !fixedlaunch;
 
         /*
         if (fixedlaunch){
@@ -79,12 +86,16 @@ public class MinimalLauncherSubsystem {
         // do stuff:
         moveFlywheel();*/
 
-        if (fixedlaunch){ // is there a way to do flywheel without feeder?
-            this.flywheel.setPower(this.poweriterator);
+        if (gamepad2.right_bumper) {
             this.feeder.setPower(OpmodeConstants.FEEDER_POWER);
         } else {
-            this.flywheel.setPower(0);
             this.feeder.setPower(0);
+        }
+
+        if (fixedlaunch){ // is there a way to do flywheel without feeder?
+            this.flywheel.setPower(this.poweriterator);
+        } else {
+            this.flywheel.setPower(0);
         }
         this.telemetry.addData("Flywheel active",fixedlaunch);
         boolean stepup = gamepad2.dpad_up;
@@ -112,6 +123,7 @@ public class MinimalLauncherSubsystem {
         }
 
         stepperkeydown = stepdown || stepup;
+        launchWasPressed = rightTrigPressed;
 
         this.telemetry.addData("Flywheel Power", this.poweriterator);
         

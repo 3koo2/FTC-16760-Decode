@@ -53,10 +53,8 @@ public class MinimalIntakeSubsystem{
     }
 
     public void operateIntake(Gamepad gamepad2){
-        boolean runIntake = gamepad2.right_trigger > OpmodeConstants.TRIGGER_TOLERANCE
-                || gamepad2.left_trigger>OpmodeConstants.TRIGGER_TOLERANCE;
-
-        boolean goback = gamepad2.x; // if x is pressed, reverse intake for some reason.
+        boolean runIntake = gamepad2.left_trigger>OpmodeConstants.TRIGGER_TOLERANCE;
+        boolean goback = gamepad2.left_bumper; // if x is pressed, reverse intake for some reason.
 
         if (runIntake){
             runIntake(1);
